@@ -6,134 +6,256 @@ export const metadata: Metadata = {
     description: 'Take our personalized supplement quiz to discover the best vitamins and nutrients for your specific health goals, gender, and lifestyle.',
 };
 
+const features = [
+    { icon: '🎯', title: 'Precision Matching', desc: 'Our algorithm analyzes 8+ data points to find your ideal match' },
+    { icon: '⚡', title: '2-Minute Quiz', desc: 'Fast, simple questions designed by nutrition experts' },
+    { icon: '⭐', title: 'Trustpilot Verified', desc: 'Only top-rated products with thousands of real reviews' },
+];
+
+const insights = [
+    {
+        icon: '💪',
+        title: 'Support for Men: Energy & Vitality',
+        desc: 'For men, maintaining healthy testosterone levels and daily energy is a top priority. Supplements like Magnesium, Zinc, and adaptogens help support natural hormone production and mitochondrial function.',
+    },
+    {
+        icon: '✨',
+        title: 'Female Health: Balance & Glow',
+        desc: "Women's nutritional needs are tied to hormonal cycles. B-vitamins, Iron, and Vitamin D impact mood and energy. Biotin and Collagen provide that sought-after natural glow from the inside out.",
+    },
+    {
+        icon: '🌿',
+        title: 'Gut & Sleep Foundation',
+        desc: 'Gut health and sleep quality are the foundations of all wellness. A healthy microbiome ensures better nutrient absorption, while restorative sleep is when your body repairs and regulates itself.',
+    },
+];
+
+const faqs = [
+    {
+        q: 'How do I know which vitamins I need?',
+        a: 'The best way is through blood work, symptom analysis, and lifestyle assessment. Our quiz provides a structured baseline by analyzing your primary health goals to suggest categories that address your specific needs.',
+    },
+    {
+        q: 'Are supplement quizzes accurate?',
+        a: 'While a quiz cannot replace a medical diagnosis, it uses established nutritional guidelines to narrow your focus — filtering through thousands of options to highlight the 2–3 categories most relevant to your stated goals.',
+    },
+    {
+        q: 'What supplements help increase energy?',
+        a: 'Common energy-supporting supplements include B-Complex vitamins for cellular energy production, CoQ10 for mitochondrial health, and Magnesium, which is involved in over 300 biochemical reactions including ATP production.',
+    },
+];
+
 export default function HealthQuizPage() {
     return (
-        <div className="pb-20">
-            {/* Hero Section */}
-            <section className="bg-gradient-to-b from-blue-50 to-white pt-20 pb-12">
-                <div className="container text-center">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 animate-fade-in">
-                        Personalized Supplement <span className="text-blue-600">Recommendation Quiz</span>
+        <div style={{ paddingBottom: '5rem' }}>
+
+            {/* ── Hero Section ── */}
+            <section style={{
+                background: 'var(--gradient-hero)',
+                paddingTop: '5rem',
+                paddingBottom: '2rem',
+                position: 'relative',
+                overflow: 'hidden',
+            }}>
+                {/* Decorative blobs */}
+                <div className="blob" style={{
+                    width: '500px', height: '500px',
+                    background: 'var(--primary)',
+                    top: '-200px', right: '-100px',
+                    opacity: 0.12,
+                }} />
+                <div className="blob" style={{
+                    width: '400px', height: '400px',
+                    background: 'var(--accent)',
+                    bottom: '-150px', left: '-80px',
+                    opacity: 0.1,
+                    animationDelay: '4s',
+                }} />
+
+                <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
+                    <div className="badge badge-primary animate-fade-in" style={{ margin: '0 auto 1.5rem', display: 'inline-flex' }}>
+                        ✦ Science-Backed Recommendations
+                    </div>
+                    <h1 className="animate-fade-in" style={{
+                        fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
+                        fontWeight: 900,
+                        marginBottom: '1.5rem',
+                        letterSpacing: '-0.04em',
+                        lineHeight: 1.1,
+                        animationDelay: '0.05s',
+                    }}>
+                        Find Your Perfect{' '}
+                        <span className="text-gradient">Health Supplement</span>
+                        {' '}in 2 Minutes
                     </h1>
-                    <div className="max-w-3xl mx-auto mb-10 text-lg md:text-xl text-text-muted animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                        <p className="mb-4">
-                            Unlock the power of targeted nutrition with our science-backed quiz. In just 2 minutes,
-                            we'll analyze your health goals, age, and lifestyle to identify the exact supplements
-                            your body needs.
-                        </p>
+                    <p className="animate-fade-in" style={{
+                        fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+                        color: 'var(--foreground-muted)',
+                        maxWidth: '600px',
+                        margin: '0 auto 3rem',
+                        lineHeight: 1.7,
+                        animationDelay: '0.1s',
+                    }}>
+                        Our AI-powered quiz analyzes your health goals, age, and lifestyle to identify
+                        the exact supplements your body needs — no guesswork required.
+                    </p>
+
+                    {/* Feature pills */}
+                    <div className="animate-fade-in" style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: '0.75rem',
+                        justifyContent: 'center',
+                        marginBottom: '3rem',
+                        animationDelay: '0.15s',
+                    }}>
+                        {features.map(f => (
+                            <div key={f.title} style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem',
+                                background: 'white',
+                                border: '1px solid var(--border)',
+                                borderRadius: '999px',
+                                padding: '0.4rem 1rem 0.4rem 0.6rem',
+                                fontSize: '0.875rem',
+                                fontWeight: 500,
+                                color: 'var(--foreground)',
+                                boxShadow: '0 1px 4px rgb(0 0 0 / 0.06)',
+                            }}>
+                                <span>{f.icon}</span>
+                                <span>{f.title}</span>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            {/* Quiz Section */}
-            <section id="quiz" className="container -mt-8 relative z-10">
+            {/* ── Quiz Section ── */}
+            <section id="quiz" className="container" style={{ marginTop: '-1rem', position: 'relative', zIndex: 10, maxWidth: '760px' }}>
                 <Quiz />
             </section>
 
-            {/* SEO Intro Text Section */}
-            <section className="container mt-24 max-w-4xl prose prose-blue">
-                <h2 className="text-3xl font-bold mb-6">Why Take a Personalized Supplement Quiz?</h2>
-                <div className="text-text-muted space-y-4">
+            {/* ── Why Take a Quiz ── */}
+            <section className="container" style={{ marginTop: '6rem', maxWidth: '800px' }}>
+                <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+                    <div className="badge badge-primary" style={{ margin: '0 auto 1rem' }}>Why It Works</div>
+                    <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 800, letterSpacing: '-0.03em' }}>
+                        Why Take a Personalized Supplement Quiz?
+                    </h2>
+                </div>
+                <div style={{ color: 'var(--foreground-muted)', display: 'flex', flexDirection: 'column', gap: '1.25rem', fontSize: '1.0625rem', lineHeight: 1.8 }}>
                     <p>
                         Navigating the world of vitamins and supplements can be overwhelming. With thousands of products
-                        on the market, each claiming to solve various health issues, how do you know which ones are
-                        actually right for you? This is where our <strong>Personalized Supplement Recommendation Quiz</strong>
-                        comes in.
+                        on the market, our <strong style={{ color: 'var(--foreground)' }}>Personalized Supplement Recommendation Quiz</strong> cuts through the noise.
                     </p>
                     <p>
-                        General multivitamins often take a "one size fits all" approach, but men and women have
-                        vastly different nutritional requirements. Factors such as age, stress levels, exercise frequency,
-                        and specific health goals (like muscle growth, hormone balance, or stress relief) play a
-                        critical role in determine what your body requires to function at its peak.
+                        General multivitamins take a "one size fits all" approach — but men and women have vastly different
+                        nutritional requirements. Age, stress levels, exercise frequency, and specific health goals all
+                        play a critical role in what your body needs to perform at its peak.
                     </p>
                     <p>
-                        Our system uses a sophisticated scoring algorithm to match your answers with high-quality,
-                        Trustpilot-rated supplements. Whether you're a man looking for testosterone support and
-                        increased energy, or a woman seeking hormone balance and improved skin health, our quiz
-                        pinpoints the supplement categories that offer the highest potential benefit for your
-                        unique biological profile.
-                    </p>
-                    <p>
-                        By focusing only on what you need, you avoid wasting money on unnecessary pills and
-                        ensure that you are supporting your body in the areas that matter most. Start your journey
-                        toward optimized health today by completing the quiz above.
+                        Our scoring algorithm matches your answers with high-quality, Trustpilot-rated supplements.
+                        By focusing only on what you need, you avoid wasting money on unnecessary pills and ensure
+                        your body gets targeted, evidence-based support.
                     </p>
                 </div>
             </section>
 
-            {/* Educational SEO Sections */}
-            <section className="bg-secondary mt-24 py-20">
+            {/* ── Expert Insights ── */}
+            <section style={{ background: 'var(--surface)', marginTop: '5rem', padding: '5rem 0' }}>
                 <div className="container">
-                    <h2 className="text-3xl font-bold text-center mb-16">Expert Insights into Targeted Supplementation</h2>
-
-                    <div className="grid grid-2 md:grid-3 gap-12">
-                        <div className="card bg-white">
-                            <h3 className="text-xl font-bold mb-4">Support for Men: Energy & Vitality</h3>
-                            <p className="text-text-muted">
-                                For men, maintaining healthy testosterone levels and consistent daily energy is often
-                                a top priority. As we age, natural levels can fluctuate, leading to fatigue and
-                                decreased performance. Supplements like Magnesium, Zinc, and specific adaptogens
-                                can help support natural hormone production and mitochondrial function, ensuring
-                                you stay energized throughout your busy day.
-                            </p>
-                        </div>
-
-                        <div className="card bg-white">
-                            <h3 className="text-xl font-bold mb-4">Female Health: Balance & Glow</h3>
-                            <p className="text-text-muted">
-                                Women's nutritional needs are closely tied to hormonal cycles and life stages.
-                                Supporting hormone balance through supplements like B-vitamins, Iron, and Vitamin D
-                                can significantly impact mood, energy, and even skin clarity. Furthermore, focused
-                                support for hair and skin with Biotin and Collagen can provide that sought-after
-                                natural glow from the inside out.
-                            </p>
-                        </div>
-
-                        <div className="card bg-white">
-                            <h3 className="text-xl font-bold mb-4">The Importance of Gut & Sleep</h3>
-                            <p className="text-text-muted">
-                                Regardless of gender, gut health and sleep quality are the foundations of all
-                                wellness. A healthy microbiome ensures better nutrient absorption, while
-                                restorative sleep is when your body repairs and regulates itself. Probiotics
-                                and sleep aids like Magnesium Glycinate are frequently recommended to provide
-                                this essential baseline support.
-                            </p>
-                        </div>
+                    <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+                        <div className="badge badge-primary" style={{ margin: '0 auto 1rem' }}>Expert Insights</div>
+                        <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.25rem)', fontWeight: 800, letterSpacing: '-0.03em' }}>
+                            Targeted Supplementation by Goal
+                        </h2>
+                    </div>
+                    <div className="grid grid-3">
+                        {insights.map((item) => (
+                            <div key={item.title} className="card" style={{ textAlign: 'left' }}>
+                                <div style={{
+                                    width: '48px', height: '48px',
+                                    background: 'var(--primary-light)',
+                                    borderRadius: '12px',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    fontSize: '1.5rem',
+                                    marginBottom: '1.25rem',
+                                }}>
+                                    {item.icon}
+                                </div>
+                                <h3 style={{ fontSize: '1.0625rem', fontWeight: 700, marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>{item.title}</h3>
+                                <p style={{ color: 'var(--foreground-muted)', fontSize: '0.9375rem', lineHeight: 1.7 }}>{item.desc}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            {/* FAQ Section */}
-            <section className="container mt-24 max-w-4xl">
-                <h2 className="text-3xl font-bold mb-10 text-center">Frequently Asked Questions</h2>
-                <div className="space-y-6">
-                    <div className="card">
-                        <h4 className="font-bold text-lg mb-2">How do I know which vitamins I need?</h4>
-                        <p className="text-text-muted">
-                            The best way to determine your vitamin needs is through a combination of blood work,
-                            symptom analysis, and lifestyle assessment. Our quiz provides a structured baseline
-                            by analyzing your primary health goals and symptoms to suggest categories that
-                            typically address those specific needs.
-                        </p>
-                    </div>
-                    <div className="card">
-                        <h4 className="font-bold text-lg mb-2">Are supplement quizzes accurate?</h4>
-                        <p className="text-text-muted">
-                            While a quiz cannot replace a medical diagnosis, it uses established nutritional
-                            guidelines to narrow down your focus. It helps filter through thousands of
-                            options to highlight the 2-3 categories most relevant to your stated goals,
-                            saving you time and research effort.
-                        </p>
-                    </div>
-                    <div className="card">
-                        <h4 className="font-bold text-lg mb-2">What supplements help increase energy?</h4>
-                        <p className="text-text-muted">
-                            Common energy-supporting supplements include B-Complex vitamins, which are
-                            essential for cellular energy production, CoQ10 for mitochondrial health, and
-                            Magnesium, which is involved in over 300 biochemical reactions in the body,
-                            including the production of ATP.
-                        </p>
-                    </div>
+            {/* ── FAQ ── */}
+            <section className="container" style={{ marginTop: '5rem', maxWidth: '720px' }}>
+                <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                    <div className="badge badge-primary" style={{ margin: '0 auto 1rem' }}>FAQ</div>
+                    <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.25rem)', fontWeight: 800, letterSpacing: '-0.03em' }}>
+                        Frequently Asked Questions
+                    </h2>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    {faqs.map((faq, i) => (
+                        <div key={i} className="card" style={{ padding: '1.5rem 1.75rem' }}>
+                            <h4 style={{ fontWeight: 700, fontSize: '1.0625rem', marginBottom: '0.625rem', letterSpacing: '-0.01em' }}>
+                                {faq.q}
+                            </h4>
+                            <p style={{ color: 'var(--foreground-muted)', fontSize: '0.9375rem', lineHeight: 1.7, marginBottom: 0 }}>
+                                {faq.a}
+                            </p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* ── CTA Banner ── */}
+            <section className="container" style={{ marginTop: '5rem', maxWidth: '900px' }}>
+                <div style={{
+                    background: 'var(--gradient-primary)',
+                    borderRadius: 'var(--radius-xl)',
+                    padding: '3.5rem',
+                    textAlign: 'center',
+                    position: 'relative',
+                    overflow: 'hidden',
+                }}>
+                    <div style={{
+                        position: 'absolute', top: '-60px', right: '-60px',
+                        width: '250px', height: '250px',
+                        background: 'rgba(255,255,255,0.08)',
+                        borderRadius: '50%',
+                    }} />
+                    <div style={{
+                        position: 'absolute', bottom: '-40px', left: '-40px',
+                        width: '180px', height: '180px',
+                        background: 'rgba(255,255,255,0.06)',
+                        borderRadius: '50%',
+                    }} />
+                    <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.9rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
+                        Ready to Start?
+                    </p>
+                    <h2 style={{ color: 'white', fontSize: 'clamp(1.5rem, 4vw, 2.25rem)', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.03em' }}>
+                        Discover Your Ideal Supplements Today
+                    </h2>
+                    <p style={{ color: 'rgba(255,255,255,0.75)', marginBottom: '2rem', maxWidth: '500px', margin: '0 auto 2rem', lineHeight: 1.7 }}>
+                        Join thousands who've already optimized their health with our personalized quiz.
+                    </p>
+                    <a href="#quiz" className="btn" style={{
+                        background: 'white',
+                        color: 'var(--primary)',
+                        fontWeight: 700,
+                        padding: '0.875rem 2.25rem',
+                        fontSize: '1rem',
+                        borderRadius: 'var(--radius-lg)',
+                        boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+                    }}>
+                        Take the Free Quiz →
+                    </a>
                 </div>
             </section>
         </div>
