@@ -1,0 +1,6 @@
+node_modules
+.next
+.env*
+build_output.txt
+.DS_Store
+Thumbs.db
