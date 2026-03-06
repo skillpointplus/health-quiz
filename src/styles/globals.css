@@ -426,6 +426,18 @@ img {
   scroll-margin-top: 80px;
 }
 
+/* ===== NAV LINK ===== */
+.nav-link {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--foreground-muted);
+  transition: color 0.2s;
+}
+
+.nav-link:hover {
+  color: var(--primary);
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 640px) {
   .container {

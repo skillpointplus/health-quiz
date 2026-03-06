@@ -17,57 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en">
             <body className={jakarta.variable}>
-                {/* Header */}
-                <header className="glass sticky top-0 z-50">
-                    <nav className="container py-4 flex justify-between items-center">
-                        <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <span style={{
-                                width: '32px', height: '32px',
-                                background: 'var(--gradient-primary)',
-                                borderRadius: '8px',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                fontSize: '16px',
-                            }}>✦</span>
-                            <span style={{
-                                fontSize: '1.25rem',
-                                fontWeight: 800,
-                                background: 'var(--gradient-primary)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                backgroundClip: 'text',
-                                letterSpacing: '-0.03em',
-                            }}>
-                                HealthQuiz
-                            </span>
-                        </a>
-                        <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-                            <a href="/health-quiz" style={{
-                                fontSize: '0.9375rem',
-                                fontWeight: 500,
-                                color: 'var(--foreground-muted)',
-                                transition: 'color 0.2s',
-                            }}
-                                onMouseEnter={e => (e.currentTarget.style.color = 'var(--primary)')}
-                                onMouseLeave={e => (e.currentTarget.style.color = 'var(--foreground-muted)')}
-                            >Quiz</a>
-                            <a href="/about" style={{
-                                fontSize: '0.9375rem',
-                                fontWeight: 500,
-                                color: 'var(--foreground-muted)',
-                                transition: 'color 0.2s',
-                            }}>About</a>
-                            <a href="/research" style={{
-                                fontSize: '0.9375rem',
-                                fontWeight: 500,
-                                color: 'var(--foreground-muted)',
-                                transition: 'color 0.2s',
-                            }}>Research</a>
-                            <a href="/health-quiz" className="btn btn-primary" style={{ padding: '0.5rem 1.25rem', fontSize: '0.875rem' }}>
-                                Take Quiz →
-                            </a>
-                        </div>
-                    </nav>
-                </header>
+
 
                 <main>{children}</main>
 

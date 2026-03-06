@@ -1,4 +1,44 @@
+-- Schema Creation for Health Quiz
+
+-- 1. Create Categories Table
+CREATE TABLE IF NOT EXISTS public.categories (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    name TEXT NOT NULL,
+    slug TEXT NOT NULL UNIQUE,
+    description TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- 2. Create Products Table
+CREATE TABLE IF NOT EXISTS public.products (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    product_name TEXT NOT NULL,
+    slug TEXT NOT NULL UNIQUE,
+    gender_target TEXT NOT NULL CHECK (gender_target IN ('male', 'female', 'unisex')),
+    category UUID REFERENCES public.categories(id) ON DELETE CASCADE,
+    description TEXT,
+    benefits TEXT,
+    ingredients TEXT,
+    trustpilot_rating NUMERIC(3, 1),
+    trustpilot_reviews INTEGER,
+    affiliate_link TEXT,
+    product_image TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- 3. Set up Row Level Security (RLS)
+-- Enable RLS so we can query them securely from the frontend using the anon key.
+ALTER TABLE public.categories ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
+
+-- Create policies to allow standard anon read access
+CREATE POLICY "Allow public read access to categories" ON public.categories FOR SELECT USING (true);
+CREATE POLICY "Allow public read access to products" ON public.products FOR SELECT USING (true);
+
+
+-- ==========================================
 -- Seed Data for Health Quiz
+-- ==========================================
 
 -- Insert Categories
 INSERT INTO categories (name, slug, description) VALUES
@@ -8,12 +48,10 @@ INSERT INTO categories (name, slug, description) VALUES
 ('Hormone Balance', 'hormone-balance', 'Targeted nutrients for female hormonal health and wellness.'),
 ('Sleep Support', 'sleep-support', 'Promotes restful sleep and relaxation.'),
 ('Gut Health', 'gut-health', 'Probiotics and digestive support.'),
-('Hair & Skin Health', 'hair-skin-health', 'Nutrients for radiant skin and strong hair.');
+('Hair & Skin Health', 'hair-skin-health', 'Nutrients for radiant skin and strong hair.')
+ON CONFLICT (slug) DO NOTHING;
 
--- Insert Products (Examples)
--- Note: Replace UUIDs with actual category IDs if running manually, 
--- or use subqueries as shown below.
-
+-- Insert Products
 -- Male Energy Products
 INSERT INTO products (product_name, slug, gender_target, category, description, benefits, ingredients, trustpilot_rating, trustpilot_reviews, affiliate_link)
 VALUES
@@ -22,7 +60,8 @@ VALUES
 'Boosts Metabolism, Reduces Fatigue, Sharpens Focus', 'B12, Rhodiola, Ginseng', 4.8, 1250, 'https://example.com/buy-energy-max'),
 ('MitoCharge Male', 'mitocharge-male', 'male', (SELECT id FROM categories WHERE slug = 'energy-support'), 
 'Mitochondrial support specifically formulated for the active man.', 
-'Cellular Energy, ATP Support, Fast Recovery', 'CoQ10, Magnesium, L-Carnitine', 4.5, 840, 'https://example.com/buy-mitocharge');
+'Cellular Energy, ATP Support, Fast Recovery', 'CoQ10, Magnesium, L-Carnitine', 4.5, 840, 'https://example.com/buy-mitocharge')
+ON CONFLICT (slug) DO NOTHING;
 
 -- Male Testosterone Products
 INSERT INTO products (product_name, slug, gender_target, category, description, benefits, ingredients, trustpilot_rating, trustpilot_reviews, affiliate_link)
@@ -32,7 +71,8 @@ VALUES
 'Muscle Mass, Male Vitality, Libido Support', 'Zinc, D-Aspartic Acid, Fenugreek', 4.7, 3100, 'https://example.com/buy-tboost'),
 ('Alpha Shield', 'alpha-shield', 'male', (SELECT id FROM categories WHERE slug = 'testosterone-support'), 
 'Daily vitality supplement for men over 40.', 
-'Hormone Health, Vitality, Stress Control', 'Ashwagandha, Vitamin D3, Magnesium', 4.6, 1200, 'https://example.com/buy-alpha-shield');
+'Hormone Health, Vitality, Stress Control', 'Ashwagandha, Vitamin D3, Magnesium', 4.6, 1200, 'https://example.com/buy-alpha-shield')
+ON CONFLICT (slug) DO NOTHING;
 
 -- Female Hormone Products
 INSERT INTO products (product_name, slug, gender_target, category, description, benefits, ingredients, trustpilot_rating, trustpilot_reviews, affiliate_link)
@@ -42,16 +82,18 @@ VALUES
 'Mood Support, Cycle Comfort, Skin Clarity', 'Evening Primrose, Vitamin B6, Magnesium', 4.9, 1800, 'https://example.com/buy-herbalance'),
 ('Cycle Calm', 'cycle-calm', 'female', (SELECT id FROM categories WHERE slug = 'hormone-balance'), 
 'Focused relief for hormonal fluctuations.', 
-'Reduces Bloating, Eases Stress, Better Sleep', 'Chasteberry, Zinc, Ashwagandha', 4.4, 650, 'https://example.com/buy-cycle-calm');
+'Reduces Bloating, Eases Stress, Better Sleep', 'Chasteberry, Zinc, Ashwagandha', 4.4, 650, 'https://example.com/buy-cycle-calm')
+ON CONFLICT (slug) DO NOTHING;
 
 -- Female Weight Loss
 INSERT INTO products (product_name, slug, gender_target, category, description, benefits, ingredients, trustpilot_rating, trustpilot_reviews, affiliate_link)
 VALUES
 ('LeanShe Pro', 'leanshe-pro', 'female', (SELECT id FROM categories WHERE slug = 'weight-management'), 
 'Natural metabolism booster for active women.', 
-'Fat Burn, Appetite Control, Energy Boost', 'Green Tea, Chromium, L-Theanine', 4.5, 2100, 'https://example.com/buy-leanshe');
+'Fat Burn, Appetite Control, Energy Boost', 'Green Tea, Chromium, L-Theanine', 4.5, 2100, 'https://example.com/buy-leanshe')
+ON CONFLICT (slug) DO NOTHING;
 
--- Unisex Sleep (using unisex or adding both)
+-- Unisex Sleep
 INSERT INTO products (product_name, slug, gender_target, category, description, benefits, ingredients, trustpilot_rating, trustpilot_reviews, affiliate_link)
 VALUES
 ('Night Rest Plus (Male)', 'night-rest-male', 'male', (SELECT id FROM categories WHERE slug = 'sleep-support'), 
@@ -59,4 +101,5 @@ VALUES
 'Fall Asleep Faster, Stay Asleep, No Morning Grogginess', 'Melatonin, Magnesium, Valerian', 4.7, 950, 'https://example.com/buy-nightrest-m'),
 ('Night Rest Plus (Female)', 'night-rest-female', 'female', (SELECT id FROM categories WHERE slug = 'sleep-support'), 
 'Beauty sleep and hormonal night support.', 
-'Restorative Sleep, Wake Up Refreshed, Skin Repair', 'Melatonin, 5-HTP, Glycine', 4.8, 1100, 'https://example.com/buy-nightrest-f');
+'Restorative Sleep, Wake Up Refreshed, Skin Repair', 'Melatonin, 5-HTP, Glycine', 4.8, 1100, 'https://example.com/buy-nightrest-f')
+ON CONFLICT (slug) DO NOTHING;
